@@ -105,8 +105,9 @@ def main(name):
                 with c1:
                     st.metric(label='Back Squat', value = 0, delta=0)
                     
-            maxb = maxes[maxes['lift'] == "Bench Press"]
+            
             try:
+                maxb = maxes[maxes['lift'] == "Bench Press"]
                 lastbp = int(maxb['weight'].iloc[0])
                 recentbp = maxb['weight'].astype(int).max()
                 difbp = recentbp - lastbp
