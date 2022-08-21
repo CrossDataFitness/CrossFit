@@ -84,6 +84,7 @@ def main(name):
             colored_header("Progress")
             prog_fig = px.bar(prog_df, x="date", y = 'weight',color='lift', facet_col='reps',facet_col_wrap=3, width=1200,barmode='group')
             prog_fig.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)',})
+            prog_fig.update_yaxes(range=(0,500))
             st.plotly_chart(prog_fig, config= dict(
                     displayModeBar = False))
         except:
