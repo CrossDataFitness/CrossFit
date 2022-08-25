@@ -4,9 +4,9 @@ import plotly.express as px
 import itertools
 import numpy as np
 from pycaret.regression import setup, create_model, finalize_model, predict_model
-from ehr_db import create_table, add_data,add_user, create_user,view_all_data,view_all_users, view_all_data_names, get_name, edit_name_data, delete_data
 from streamlit.components.v1 import html
-create_user()
+from deta import Deta
+
     
 
 def nav_page(page_name, timeout_secs=3):
@@ -44,14 +44,18 @@ st.header("Welcome to CrossData 🏋️‍")
 user_name = st.text_input("Enter your user name")
 password = st.text_input("Enter your password")
 
+deta = Deta("b02l5gt3_MFtTQuHFmWUEofyrn54FjjnWxAevcaY1")
+db = deta.Base("fitusers")
+
 login_btn = st.button("Log In")
 if login_btn:
-    result = view_all_users()
-    df = pd.DataFrame(result, columns=['user_name', 'password'])
+    result = db.fetch().items
+    df = pd.DataFrame(result)
+    st.dataframe(df)
     user_check_df = df[df['user_name'] == user_name]
     try:
         if user_check_df['password'].iloc[-1] == password:
-            add_user(user_name, password)
+            db.put({"user_name": user_name, "password": password})
             nav_page("display")
         else:
             st.error("Incorrect password or user name. Please try again.")
@@ -59,12 +63,12 @@ if login_btn:
         st.error("Incorrect password or user name. Please try again.")
 account_btn = st.button("Create Account")
 if account_btn:
-    result1 = view_all_users()
-    df1 = pd.DataFrame(result1, columns=['user_name', 'password'])
+    result1 = db.fetch().items
+    df1 = pd.DataFrame(result1)
     user_check_df1 = df1[df1['user_name'] == user_name]
     if len(user_check_df1) < 1:
         
-        add_user(user_name, password)
+        db.put({"user_name": user_name, "password": password})
         st.info("Welcome " + user_name + " please proceed to login in with your new acount.")
     else:
         st.error("User Name Taken. If you already have an account, please enter your user name and select log in. If you are a new user, please enter a new user name.")
