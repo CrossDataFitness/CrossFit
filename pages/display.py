@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Aug 23 23:02:51 2022
-
-@author: chags
-"""
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import itertools
 import numpy as np
 from pycaret.regression import setup, create_model, finalize_model, predict_model
-from ehr_db import create_table, add_data, view_all_data, view_all_users,view_all_data_names, get_name, edit_name_data, delete_data
+from deta import Deta
+deta = Deta("b02l5gt3_MFtTQuHFmWUEofyrn54FjjnWxAevcaY1")
+users_db = deta.Base("fitusers")
+wo_db = deta.Base("wodb")
+wo_db.put({"name": 'name', "date": 'date', "lift": 'lift', "weight": 'weight',"sets": 'sets', "time": 'time', 'sentiment': 'sentiment', 'notes': 'notes'})
 st.set_page_config(layout="wide",
    page_title="CrossData 🏋️‍",
    page_icon="🏋️‍", initial_sidebar_state="collapsed")
@@ -81,14 +78,14 @@ def predict_future(data):
     predict_future = predict_model(final, data=future_df)
     return predict_future             
 def main():
-    create_table()
     st.title("CrossData 🏋️‍")
 
     DISPLAY, TABLES, ABOUT= st.tabs(["Workout Analytics", "Max Tables and Projections", "About"])
-    result = view_all_data()
-    result1 = view_all_users()
-    df = pd.DataFrame(result, columns=['name', 'date', 'lift', 'weight', 'sets','time', 'sentiment', 'notes'])
-    df1 = pd.DataFrame(result1, columns=['user_name', 'password'])
+    
+    result = wo_db.fetch().items
+    result1 = users_db.fetch().items
+    df = pd.DataFrame(result)
+    df1 = pd.DataFrame(result1)
     name = df1['user_name'].iloc[-1]
     df = df[df['name'] == name]
     df = df[['lift','date','weight', 'sets', 'sentiment']]
@@ -105,7 +102,7 @@ def main():
         #notes = st.text_input("Enter Notes")
         notes = 'no new notes'
         if st.button("➕"):
-            add_data(name, date, lift, weight, sets,time, sentiment, notes)
+            wo_db.put({"name": name, "date": str(date), "lift": lift, "weight": weight,"sets": sets, "time": time, 'sentiment': sentiment, 'notes': notes})
             st.success("SUCCESSFULLY ADDED: {}".format(date))
 
     
@@ -114,8 +111,8 @@ def main():
     with DISPLAY:
 
         try:
-            result = view_all_data()
-            df = pd.DataFrame(result, columns=['name', 'date', 'lift', 'weight', 'sets','time', 'sentiment', 'notes'])
+            result = wo_db.fetch().items
+            df = pd.DataFrame(result)
             df = df[df['name'] == name]
             df = df[['lift','date','weight', 'sets', 'sentiment']]
             df = df.dropna()
