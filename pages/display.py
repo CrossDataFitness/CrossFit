@@ -224,6 +224,7 @@ def main():
             for i in range(len(maxtable)):
                 maxlft = liftdf['weight'].max()
                 maxtable['100%'].iloc[ind] = maxlft
+                print(maxtable['100%'].iloc[ind] = maxlft)
                 maxtable['95%'].iloc[ind] = round(maxlft * 0.95, 2)
                 maxtable['90%'].iloc[ind] = round(maxlft * 0.90, 2)
                 maxtable['85%'].iloc[ind] = round(maxlft * 0.85,2)
