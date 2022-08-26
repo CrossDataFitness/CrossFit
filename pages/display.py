@@ -196,7 +196,6 @@ def main():
         colored_header("Percentage Table")
         maxtable = pd.DataFrame()
         maxtable['Lifts'] = df['lift'].unique()
-        st.dataframe(maxtable)
         ind = 0
         maxtable['100%'] = 'na'
         maxtable['95%'] = 'na'
@@ -218,11 +217,11 @@ def main():
         maxtable['15%'] = 'na'
         maxtable['10%'] = 'na'
         maxtable['5%'] = 'na'
-        for lft in df['lift'].unique():
+        for lft in maxtable['lift'].unique():
             print(lft)
             liftdf = df[df['lift'] == lft]
             print(liftdf)
-            #liftdf['weight'] = liftdf['weight'].astype(float)
+            liftdf['weight'] = liftdf['weight'].astype(float)
 
             for i in range(len(maxtable)):
                 maxlft = liftdf['weight'].max()
