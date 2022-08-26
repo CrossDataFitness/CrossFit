@@ -8,7 +8,7 @@ from deta import Deta
 deta = Deta("b02l5gt3_MFtTQuHFmWUEofyrn54FjjnWxAevcaY1")
 users_db = deta.Base("fitusers")
 wo_db = deta.Base("wodb")
-wo_db.put({"name": 'name', "date": 'date', "lift": 'lift', "weight": 'weight',"sets": 'sets', "time": 'time', 'sentiment': 'sentiment', 'notes': 'notes'})
+#wo_db.put({"name": 'name', "date": 'date', "lift": 'lift', "weight": 'weight',"sets": 'sets', "time": 'time', 'sentiment': 'sentiment', 'notes': 'notes'})
 st.set_page_config(layout="wide",
    page_title="CrossData 🏋️‍",
    page_icon="🏋️‍", initial_sidebar_state="collapsed")
@@ -178,6 +178,7 @@ def main():
     with TABLES:
         try:
             d = df
+            d =d['sets']!='sets']
             d['sets'] = d['sets'].astype(int)
             maxes = d[d['sets']==1]
             for ls in maxes['lift'].unique():
