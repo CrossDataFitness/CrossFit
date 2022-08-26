@@ -221,7 +221,7 @@ def main():
             df1 = df[['lift', 'weight']]
             df1 = df1.dropna()
             liftdf = df1[df1['lift'] == lft]
-            liftdf['weight'] = liftdf['weight'].astype(float)
+            liftdf['weight'] = liftdf['weight']
             for i in range(len(maxtable)):
                 maxlft = liftdf['weight'].max()
                 maxtable['100%'].iloc[ind] = maxlft
