@@ -154,27 +154,27 @@ def main():
 
         except:
             pass
-        try:
-            with col1:
-                df['reps'] = df['sets'].astype(int)
-                print('line 147')
-                df['weight'] = df['weight'].astype(float)
-                prog_df = df[df['reps'] < 4]
-                colored_header("Progress")
-                prog_fig1 = 0
-                prog_df['sequence'] = prog_df.index
-                prog_df["Work Out"] = prog_df.groupby("lift")['sequence'].apply(lambda x: x.groupby(x).ngroup() + 1)
-                prog_fig1 = px.bar(prog_df, x="Work Out", y = 'weight',color='lift', facet_row='lift', height = 450,width=490,hover_data=["reps", "date"])
-                prog_fig1.update_layout(showlegend=False,hovermode='x')
-                prog_fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)',})
-                st.plotly_chart(prog_fig1, config= dict(
-                        displayModeBar = False))
-                #st.dataframe(df.style.highlight_max(axis=0))
-            with col2:
-                colored_header("Data")
-                st.dataframe(df.drop(['sets'],axis=1).style.background_gradient(), height=410, width=600)
-        except:
-            st.info("Enter your first workout")
+        #try:
+         with col1:
+             df['reps'] = df['sets'].astype(int)
+             print('line 147')
+             df['weight'] = df['weight'].astype(float)
+             prog_df = df[df['reps'] < 4]
+             colored_header("Progress")
+             prog_fig1 = 0
+             prog_df['sequence'] = prog_df.index
+             prog_df["Work Out"] = prog_df.groupby("lift")['sequence'].apply(lambda x: x.groupby(x).ngroup() + 1)
+             prog_fig1 = px.bar(prog_df, x="Work Out", y = 'weight',color='lift', facet_row='lift', height = 450,width=490,hover_data=["reps", "date"])
+             prog_fig1.update_layout(showlegend=False,hovermode='x')
+             prog_fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)','paper_bgcolor': 'rgba(0, 0, 0, 0)',})
+             st.plotly_chart(prog_fig1, config= dict(
+                     displayModeBar = False))
+             #st.dataframe(df.style.highlight_max(axis=0))
+         with col2:
+             colored_header("Data")
+             st.dataframe(df.drop(['sets'],axis=1).style.background_gradient(), height=410, width=600)
+        #except:
+            #st.info("Enter your first workout")
     with TABLES:
         try:
             d = df.copy()
