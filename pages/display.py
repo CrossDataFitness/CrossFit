@@ -217,12 +217,11 @@ def main():
         maxtable['10%'] = 'na'
         maxtable['5%'] = 'na'
         for lft in df['lift'].unique():
-            #maxtable['Lifts'].iloc[0] = str(lft)
             print(lft)
-            liftdf = df[df['lift'] == lft]
+            df1 = df[df['lift'].dropna()]
+            liftdf = df1[df1['lift'] == lft]
             liftdf['weight'] = liftdf['weight'].astype(float)
             for i in range(len(maxtable)):
-                
                 maxlft = liftdf['weight'].max()
                 maxtable['100%'].iloc[ind] = maxlft
                 maxtable['95%'].iloc[ind] = round(maxlft * 0.95, 2)
