@@ -178,7 +178,7 @@ def main():
     with TABLES:
         try:
             d = df
-            d =d['sets']!='sets']
+            d =d[d['sets']!='sets']
             d['sets'] = d['sets'].astype(int)
             maxes = d[d['sets']==1]
             for ls in maxes['lift'].unique():
