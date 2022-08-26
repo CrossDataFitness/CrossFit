@@ -220,7 +220,9 @@ def main():
         for lft in df['lift'].unique():
             print(lft)
             liftdf = df[df['lift'] == lft]
-            liftdf['weight'] = liftdf['weight'].astype(float)
+            print(liftdf)
+            #liftdf['weight'] = liftdf['weight'].astype(float)
+
             for i in range(len(maxtable)):
                 maxlft = liftdf['weight'].max()
                 maxtable['100%'].iloc[ind] = maxlft
