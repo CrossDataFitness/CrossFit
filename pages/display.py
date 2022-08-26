@@ -156,6 +156,7 @@ def main():
             pass
         #try:
         with col1:
+             df =df[df['reps']!='']
              df['reps'] = df['sets'].astype(int)
              print('line 147')
              df['weight'] = df['weight'].astype(float)
