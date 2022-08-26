@@ -218,7 +218,7 @@ def main():
         maxtable['5%'] = 'na'
         for lft in df['lift'].unique():
             print(lft)
-            df1 = df[df['lift'].dropna()]
+            df1 = df[df[['lift']].dropna()]
             liftdf = df1[df1['lift'] == lft]
             liftdf['weight'] = liftdf['weight'].astype(float)
             for i in range(len(maxtable)):
