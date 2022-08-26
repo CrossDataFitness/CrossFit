@@ -196,6 +196,7 @@ def main():
         colored_header("Percentage Table")
         maxtable = pd.DataFrame()
         maxtable['Lifts'] = df['lift'].unique()
+        st.dataframe(maxtable)
         ind = 0
         maxtable['100%'] = 'na'
         maxtable['95%'] = 'na'
