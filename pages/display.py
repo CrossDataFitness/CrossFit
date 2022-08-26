@@ -155,7 +155,7 @@ def main():
         except:
             pass
         #try:
-         with col1:
+        with col1:
              df['reps'] = df['sets'].astype(int)
              print('line 147')
              df['weight'] = df['weight'].astype(float)
@@ -170,7 +170,7 @@ def main():
              st.plotly_chart(prog_fig1, config= dict(
                      displayModeBar = False))
              #st.dataframe(df.style.highlight_max(axis=0))
-         with col2:
+        with col2:
              colored_header("Data")
              st.dataframe(df.drop(['sets'],axis=1).style.background_gradient(), height=410, width=600)
         #except:
