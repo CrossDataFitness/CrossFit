@@ -177,8 +177,7 @@ def main():
             st.info("Enter your first workout")
     with TABLES:
         try:
-            d = df
-            d =d[d['sets']!='sets']
+            d = df.copy()
             d['sets'] = d['sets'].astype(int)
             maxes = d[d['sets']==1]
             for ls in maxes['lift'].unique():
@@ -217,11 +216,10 @@ def main():
         maxtable['15%'] = 'na'
         maxtable['10%'] = 'na'
         maxtable['5%'] = 'na'
-        for lft in maxtable['lift'].unique():
+        for lft in df['lift'].unique():
             print(lft)
             liftdf = df[df['lift'] == lft]
             print(liftdf)
-            liftdf['weight'] = liftdf['weight'].astype(float)
 
             for i in range(len(maxtable)):
                 maxlft = liftdf['weight'].max()
